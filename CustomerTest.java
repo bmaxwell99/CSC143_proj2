@@ -48,6 +48,7 @@ public class CustomerTest
         assertEquals("Joe Schmoe",      cust1.getName());
         assertEquals("1234567890",  cust1.getPNumber());
         assertEquals(0,                 cust1.getBalance(), DOLLAR_VARIANCE);
+        assertEquals(0, cust1.getUnitsRented());
     }
     
     @Test
@@ -68,26 +69,41 @@ public class CustomerTest
     @Test (expected = IllegalArgumentException.class)
     public void testConstrPNumber()
     {
-        Customer cust1 = new Customer("Joe Scmoe", "123-456-7890");        
+        Customer cust1 = new Customer("Joe Schmoe", "123-456-7890");        
     }
     
     @Test (expected = IllegalArgumentException.class)
     public void testChargeNeg(){
-        Customer cust1 = new Customer("Joe Scmoe", "1234567890");
+        Customer cust1 = new Customer("Joe Schmoe", "1234567890");
         cust1.chargeAccount(-.01);
     }
     
     @Test (expected = IllegalArgumentException.class)
     public void testCreditNeg(){
-        Customer cust1 = new Customer("Joe Scmoe", "1234567899");
+        Customer cust1 = new Customer("Joe Schmoe", "1234567899");
         cust1.chargeAccount(.01);
         cust1.creditAccount(-.01);
     }
     
     @Test (expected = IllegalArgumentException.class)
     public void testCreditLessThanBalance(){
-        Customer cust1 = new Customer("Joe Scmoe", "1234567890");
+        Customer cust1 = new Customer("Joe Schmoe", "1234567890");
         cust1.chargeAccount(24.99);
         cust1.creditAccount(25);
+    }
+    
+    @Test
+    public void testUnitsIncAndDec()    {
+        Customer cust1 = new Customer("Joe Schmoe", "1234567890");
+        cust1.incUnitsRented();
+        assertEquals(1, cust1.getUnitsRented());
+        cust1.decUnitsRented();
+        assertEquals(0, cust1.getUnitsRented());
+    }
+    
+    @Test   (expected = IllegalArgumentException.class)
+    public void testNegativeUnitsRented()   {
+        Customer cust1 = new Customer("Joe Schmoe", "12345367890");
+        cust1.decUnitsRented();
     }
 }

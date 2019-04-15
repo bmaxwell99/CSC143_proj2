@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=HumidityUnit
+comment0.text=\r\n\ This\ object\ represents\ any\ individual\ Humidity\ Controlled\ storage\ unit\ present\ in\ a\ location\r\n\r\n\ @author\ Brian\ Maxwell\r\n\ @version\ 4.14\r\n
+comment1.params=width\ height\ length\ myLoc\ humLvl
+comment1.target=HumidityUnit(double,\ double,\ double,\ StorageLocation,\ int)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ HumidityUnit\r\n
+comment2.params=
+comment2.target=double\ calcPrice()
+comment2.text=\r\n\ calculates\ the\ price\ of\ the\ price\ of\ the\ unit\r\n\r\n\ @return\ \ \ \ the\ price\ of\ the\ unit\r\n
+comment3.params=humLvl
+comment3.target=void\ setHumLvl(int)
+comment3.text=\r\n\ a\ setter\ for\ the\ humLvl\ variable\r\n\r\n\ @param\ \ humLvl\ \ \ the\ humdity\ level\ to\ be\ set\r\n\r\n
+comment4.params=
+comment4.target=int\ getHumLvl()
+comment4.text=\r\n\ a\ getter\ for\ units\ humidity\ level\r\n\r\n\ @return\ \ \ \ the\ humidity\ level\ of\ the\ unit\r\n
+numComments=5

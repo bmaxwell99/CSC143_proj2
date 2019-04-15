@@ -1,42 +1,40 @@
 import java.time.LocalDate;
 
 /**
- * This object is represents any individual storage unit present in a location
+ * This abstarct object represents any individual storage unit present in a location
  *
  * @author Brian Maxwell
- * @version 4.5
+ * @version 4.14
  */
-public class StorageUnit
+public abstract class StorageUnit
 {
     private double width;
     private double height;
     private double length;    
-    private double price;
+    //private double price;
     private Customer rentedBy;
-    private double rentedFor;
-    private RoomType roomType;
     private LocalDate rentalDate;
+    private StorageLocation myLoc;
 
     /**
      * Constructor for objects of class StorageUnit
      */
-    public StorageUnit(double width, double height, double length, double price, RoomType roomtype)
+    public StorageUnit(double width, double height, double length, StorageLocation myLoc)
     {
         setWidth(width);
         setHeight(height);
         setLength(length);
-        setPrice(price);
-        setRoomType(roomtype);
-        rentedFor = -1;
+        setMyLoc(myLoc);
+        //setPrice(price);
     }
 
     /**
      * a setter for the width variable
      *
-     * @param  double   the width to be set
+     * @param  width   the width to be set
      *
      */
-    public void setWidth(double width)
+    private void setWidth(double width)
     {
         if (width > 0)  {
             this.width = width;
@@ -49,10 +47,10 @@ public class StorageUnit
     /**
      * a setter for the height variable
      *
-     * @param  double   the height to be set
+     * @param  height   the height to be set
      *
      */
-    public void setHeight(double height)
+    private void setHeight(double height)
     {
         if (height > 0 )    {
             this.height = height;
@@ -65,10 +63,10 @@ public class StorageUnit
     /**
      * a setter for the length variable
      *
-     * @param  double   the length to be set
+     * @param  length   the length to be set
      *
      */
-    public void setLength(double length)
+    private void setLength(double length)
     {
         if (length > 0) {
             this.length = length;
@@ -78,54 +76,44 @@ public class StorageUnit
         }
     }
 
-    /**
-     * a setter for the price variable
+    // /**
+     // * a setter for the price variable
+     // *
+     // * @param  price   the price to be set
+     // *
+     // */
+    // private void setPrice(double price)
+    // {
+        // this.price = price;
+    // }
+    
+     /**
+     * the method that will calculate the price of the unit based on which unit type it is
      *
-     * @param  double   the price to be set
-     *
+     * @return    the price of the unit to be set
      */
-    public void setPrice(double price)
-    {
-        if (price > 0)  {
-            this.price = price;
-        }
-        else {
-            throw new IllegalArgumentException("Price must be a non zero positive number");
-        }
-    }
+    public abstract double calcPrice();
+    
+     // /**
+     // * a getter for price variable
+     // *
+     // * @return    the price of the unit
+     // */
+    // public double getPrice()   {
+        // return price;
+    // }
     
     /**
-     * a setter for the rentedFor variable
+     * a setter for the myLoc variable
      *
-     * @param  double   the price to be set
-     *
-     */
-    public void setRentedFor(double price)
-    {
-        if (price > 0)  {
-            this.price = price;
-        }
-        else {
-            throw new IllegalArgumentException("Price must be a non zero positive number");
-        }
-    }
-
-    /**
-     * a setter for the roomType variable
-     *
-     * @param  RoomType   the roomType to be set
+     * @param  myLoc   the lcoation to be set
      *
      */
-    public void setRoomType(RoomType roomType)
+    private void setMyLoc(StorageLocation myLoc)
     {
-        if(roomType != null) {
-            this.roomType = roomType;
-        }
-        else    {
-            throw new IllegalArgumentException("Room Type cannot be null");
-        }
+        this.myLoc = myLoc;
     }
-
+    
     /**
      * a getter for units width
      *
@@ -157,30 +145,13 @@ public class StorageUnit
     }
 
     /**
-     * a getter for Price
+     * a getter for units location
      *
-     * @return    the price of the unit, either default or what it is being rented for
+     * @return    the location of the unit
      */
-    public double getPrice()
+    public StorageLocation getMyLoc()
     {
-        double price;
-        if(rentedFor == -1) {
-            price = this.price;
-        }
-        else {
-            price = this.rentedFor;
-        }
-        return price;
-    }
-
-    /**
-     * a getter for units type
-     *
-     * @return    the roomType of the unit
-     */
-    public RoomType getRoomType()
-    {
-        return roomType;
+        return myLoc;
     }
 
     /**
@@ -188,7 +159,7 @@ public class StorageUnit
      *
      * @return    the customer renting the unit
      */
-    public Customer getCustomer()
+    public Customer getRentedBy()
     {
         return rentedBy;
     }
@@ -204,31 +175,17 @@ public class StorageUnit
     }
 
     /**
-     * this method rents this unit to a given customer at a given date at a
-     * specified price
-     *
-     * @param  Customer     the customer to be renting the unit
-     * @param  LocalDate    the date to start renting the unit
-     * @param  double       the price to rent the unit for
-     */
-    public void rentUnitTo(Customer cust, LocalDate startDate, double price)
-    {
-        this.rentedBy = cust;
-        this.rentalDate = startDate;
-        setRentedFor(price);
-    }    
-
-    /**
-     * this method rents this unit to a given customer at a given date at the
-     * standard price
+     * this method rents this unit to a given customer at a given date
      *
      * @param  Customer     the customer to be renting the unit
      * @param  LocalDate    the date to start renting the unit
      */
     public void rentUnitTo(Customer cust, LocalDate startDate)
     {
-        rentUnitTo(cust, startDate, this.price);
-    }
+        this.rentedBy = cust;
+        this.rentalDate = startDate;
+        cust.incUnitsRented();
+    }    
 
     /**
      * releases the unit and clears the current renter
@@ -236,8 +193,8 @@ public class StorageUnit
      */
     public void releaseUnit()
     {
+        this.getRentedBy().decUnitsRented();
         this.rentUnitTo(null, null);
-        this.rentedFor = -1;
     }
 
 }

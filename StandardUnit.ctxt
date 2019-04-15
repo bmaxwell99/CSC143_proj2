@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=StandardUnit
+comment0.text=\r\n\ This\ object\ represents\ any\ individual\ Standard\ storage\ unit\ present\ in\ a\ location\r\n\r\n\ @author\ Brian\ Maxwell\r\n\ @version\ 4.14\r\n
+comment1.params=width\ height\ length\ myLoc
+comment1.target=StandardUnit(double,\ double,\ double,\ StorageLocation)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ StandardUnit\r\n
+comment2.params=
+comment2.target=double\ calcPrice()
+comment2.text=\r\n\ calculates\ the\ price\ of\ the\ price\ of\ the\ unit\r\n\r\n\ @return\ \ \ \ the\ price\ of\ the\ unit\r\n
+numComments=3

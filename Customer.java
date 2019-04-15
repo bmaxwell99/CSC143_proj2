@@ -10,7 +10,8 @@ public class Customer
 {
     private String name;
     private String pNumber;
-    private Double balance;
+    private double balance;
+    private int unitsRented;
 
     /**
      * Constructor for objects of class Customer
@@ -20,6 +21,7 @@ public class Customer
         setName(name);
         setPNumber(pNumber);
         balance = 0.0;
+        unitsRented = 0;
     }
 
     /**
@@ -112,6 +114,37 @@ public class Customer
             balance -= amount;
         }
         return amount;
+    }
+
+    /**
+     * A getter for the units rented variable
+     *
+     * @return    the number of units rented by this customer
+     */
+    public int getUnitsRented()
+    {
+        return unitsRented;
+    }
+    
+    /**
+     * An incrementor method for the units rented variable
+     *
+     */
+    public void incUnitsRented()
+    {
+        unitsRented += 1;
+    }
+
+    /**
+     * An decremenor method for the units rented variable
+     *
+     */
+    public void decUnitsRented()
+    {
+        if(unitsRented == 0)    {
+            throw new IllegalArgumentException("Customers can't have negative units rented");
+        }
+        unitsRented -= 1;
     }
 
 }

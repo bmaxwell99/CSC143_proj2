@@ -10,39 +10,46 @@ public class StorageLocation
 {
     // instance variables
     private String designation;
-    private StorageUnit[][] storageUnits = new StorageUnit[12][20];
-    private Customer[] customers = new Customer[100];
-    private int num_customers;
+    private StorageUnit[][] storageUnits;
+    private Customer[] customers;
+    private int numCustomers;
+    private double basePrice;
 
     /**
      * Constructor for objects of class StorageLocation
      * 
      * @param   designation     the name of the store location to be instantiated
      */
-    public StorageLocation(String designation)
+    public StorageLocation(String designation, double basePrice)
     {
-        if(designation.matches("^(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])(\\d{2})(?i)([a-z]+)$"))
-        {
-            this.designation = designation;
-        }
-        else {
-            throw new IllegalArgumentException("Designation MUST start with state abrev, followed by two digits, followed by city name.");
-        }
+        setDesignation(designation);
+        setBasePrice(basePrice);        
+        this.customers = new Customer[100];
+        this.storageUnits = new StorageUnit[12][];
+        for(int row = 0; row <= 11; row++) {
+            if(row <= 6)    {
+                storageUnits[row] = new StorageUnit[10];
+                for(int col = 0; col <= 9; col++)   {
+                    storageUnits[row][col] = new StandardUnit(9, 14, 22, this);
 
-        for(int row = 0; row < 10; row++) {
-            for(int col = 0; col < 20; col++)   {
-                storageUnits[row][col] = new StorageUnit(9, 14, 22, 34.99, RoomType.STANDARD);
+                }
+            }
+            if(row > 6 & row <= 9)  {
+                storageUnits[row] = new StorageUnit[8];
+                for(int col = 0; col <= 7; col++)   {
+                    storageUnits[row][col] = new HumidityUnit(9, 14, 22, this, 40);
+                }
+
+            }
+            if( row > 9) {
+                storageUnits[row] = new StorageUnit[6];
+                for(int col = 0; col <= 5; col++)   {
+                    storageUnits[row][col] = new TemperatureUnit(9, 14, 22, this, 55);
+                }
 
             }
         }
 
-        for(int col = 0; col < 20; col++)   {
-            storageUnits[10][col] = new StorageUnit(9, 14, 22, 44.99, RoomType.HUMIDITY_CONTROLLED);
-        }
-
-        for(int col = 0; col < 20; col++)   {
-            storageUnits[11][col] = new StorageUnit(9, 14, 22, 54.99, RoomType.TEMPERATURE_CONTROLLED);
-        }
     }
 
     /**
@@ -56,20 +63,62 @@ public class StorageLocation
     }
 
     /**
+     * a setter for the designation variable
+     *
+     * @param  designation  the designation to be set
+     */
+    public void setDesignation(String designation)
+    {
+        if(designation.matches("^(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])(\\d{2})(?i)([a-z]+)$"))
+        {
+            this.designation = designation;
+        }
+        else {
+            throw new IllegalArgumentException("Designation MUST start with state abrev, followed by two digits, followed by city name.");
+        }
+    }
+
+    /**
+     * a getter for basePrice variable
+     *
+     * @return    the baseprice of the store
+     */
+    public double getBasePrice()
+    {
+        return basePrice;
+    }
+
+    /**
+     * a setter for the basePrice variable
+     *
+     * @param  basePrice  the baseprice to be set
+     */
+    public void setBasePrice(double basePrice)
+    {
+        if( basePrice >= 0) {
+            this.basePrice = basePrice;
+        }
+        else{
+            throw new IllegalArgumentException("base price cannot be a negative number");
+        }
+
+    }
+
+    /**
      * a getter method for any particular Storage  Unit
      * 
      * @param   row     the index of the row to be retrieved
      * @param   col     the index of the column to be retrieved
      * @return          the Storage Unit at the specified indexes
      */
-    public StorageUnit getStorageUnit(int row, int col)
+    public StorageUnit getUnit(int row, int col)
     {
         if( row >= 0 & row < 12) {
-            if( col >= 0 & row < 20) {
+            if( col >= 0 & col < storageUnits[row].length) {
                 return storageUnits[row][col];
             }
             else    {
-                throw new IllegalArgumentException("col must be of the index between 0 and 19");
+                throw new IllegalArgumentException("col must be of a valid index");
             }
         }
         else    {
@@ -86,10 +135,10 @@ public class StorageLocation
      */
     public void addCustomer(String name, String pNumber)
     {
-        customers[num_customers] = new Customer(name, pNumber);
-        num_customers += 1;
+        customers[numCustomers] = new Customer(name, pNumber);
+        numCustomers += 1;
         //if num_customers reaches 100, create new array of customers and add the previous one to it
-        if(num_customers == 100)    {
+        if(numCustomers == 100)    {
             Customer[] temp = new Customer[(customers.length + 100)];
             for(int i = 0; i < customers.length; i++)    {
                 temp[i] = customers[i];
@@ -106,11 +155,11 @@ public class StorageLocation
      */
     public Customer getCustomer(int index)
     {
-        if (index >= 0 & index < num_customers) {
+        if (index >= 0 & index < numCustomers) {
             return customers[index];
         }
         else    {
-            throw new IllegalArgumentException("input must be a positive number less than the num_customers on file");
+            throw new IllegalArgumentException("input must be a positive number less than the number of customers on file");
         }
     }
 
@@ -121,7 +170,7 @@ public class StorageLocation
      */
     public int getNumCustomers()
     {
-        return num_customers;
+        return numCustomers;
     }
 
     /**
@@ -133,8 +182,15 @@ public class StorageLocation
         for(StorageUnit[] row : storageUnits) {
             for(StorageUnit stor : row)   {
                 //checks to make sure occupied
-                if (stor.getCustomer() != null)    {
-                    stor.getCustomer().chargeAccount(stor.getPrice());
+                if (stor.getRentedBy() != null)    {
+                    //checks to see if owner has two or more units
+                    if(stor.getRentedBy().getUnitsRented() > 1)   {
+                        stor.getRentedBy().chargeAccount(stor.calcPrice() * .95);
+                    }
+                    else    {
+                        stor.getRentedBy().chargeAccount(stor.calcPrice());
+
+                    }
                 }
             }
         }
@@ -145,10 +201,10 @@ public class StorageLocation
      * retreives an array of all unoccupied units if both parameters are null.
      *
      * @param  cust         the customer whose units are being retrieved, null ignores customers for the search
-     * @param  type         the roomtype to be searched for, null ignores room type for the search
+     * @param  type         the StorageUnit type to be searched for, null ignores room type for the search
      * @return              the array of Storage Units owned
      */
-    public StorageUnit[] getUnits(Customer cust, RoomType type)
+    public StorageUnit[] getUnit(Customer cust, StorageUnit type)
     {
         StorageUnit[] units = new StorageUnit[240];
         int unitsIndex = 0;
@@ -156,35 +212,39 @@ public class StorageLocation
             for (StorageUnit stor : row)   {
                 //searches for a specific customer with a specific roomtype
                 if( cust != null & type != null) {
-                    if(stor.getCustomer().equals(cust) & stor.getRoomType().equals(type))   {
+                    if(stor.getRentedBy().equals(cust) & stor.getClass().equals(type.getClass()))   {
                         units[unitsIndex] = stor;
                         unitsIndex += 1;
                     }
                 }
                 //searches for a specific customer
                 if( cust != null & type == null)   {
-                    if(stor.getCustomer().equals(cust)) {
+                    if(stor.getRentedBy().equals(cust)) {
                         units[unitsIndex] = stor;
                         unitsIndex += 1;
                     }
                 }
-                //searches for a specific roomtype
+                //searches for a specific StorageUnit type
                 if( cust == null & type != null)   {
-                    if(stor.getCustomer().equals(null) & stor.getRoomType().equals(type)) {
+                    if(stor.getRentedBy().equals(null) & stor.getClass().equals(type.getClass())) {
                         units[unitsIndex] = stor;
                         unitsIndex += 1;
                     }
                 }
                 //searches for all empty units
                 else    {
-                    if(stor.getCustomer().equals(null)) {
+                    if(stor.getRentedBy().equals(null)) {
                         units[unitsIndex] = stor;
                         unitsIndex += 1;
                     }
                 }
             }
         }
-        return units;
+        StorageUnit[] units2 = new StorageUnit[unitsIndex];   
+        for(int i= 0; i < unitsIndex; i++)  {
+                units2[i] = units[i];
+        }
+        return units2;
     }
 
 }

@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=TemperatureUnit
+comment0.text=\r\n\ This\ object\ represents\ any\ individual\ Temperature\ Controlled\ storage\ unit\ present\ in\ a\ location\r\n\r\n\ @author\ Brian\ Maxwell\r\n\ @version\ 4.14\r\n
+comment1.params=width\ height\ length\ myLoc\ tempLvl
+comment1.target=TemperatureUnit(double,\ double,\ double,\ StorageLocation,\ int)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ TemperatureUnit\r\n
+comment2.params=
+comment2.target=double\ calcPrice()
+comment2.text=\r\n\ calculates\ the\ price\ of\ the\ price\ of\ the\ unit\r\n\r\n\ @return\ \ \ \ the\ price\ of\ the\ unit\r\n
+comment3.params=tempLvl
+comment3.target=void\ setTempLvl(int)
+comment3.text=\r\n\ a\ setter\ for\ the\ tempLvl\ variable\r\n\r\n\ @param\ \ tempLvl\ \ \ the\ temperature\ level\ to\ be\ set\r\n\r\n
+comment4.params=
+comment4.target=int\ getTempLvl()
+comment4.text=\r\n\ a\ getter\ for\ units\ temperature\ level\r\n\r\n\ @return\ \ \ \ the\ temperature\ level\ of\ the\ unit\r\n
+numComments=5

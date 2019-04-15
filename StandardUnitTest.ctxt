@@ -1,13 +1,9 @@
 #BlueJ class context
-comment0.target=StorageUnitTest
+comment0.target=StandardUnitTest
 comment0.text=\r\n\ The\ test\ class\ StorageUnitTest.\r\n\r\n\ @author\ \ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
-comment1.target=StorageUnitTest()
+comment1.target=StandardUnitTest()
 comment1.text=\r\n\ Default\ constructor\ for\ test\ class\ StorageUnitTest\r\n
-comment10.params=
-comment10.target=void\ testRentedForNeg()
-comment11.params=
-comment11.target=void\ testConstrRoomTypeNull()
 comment2.params=
 comment2.target=void\ setUp()
 comment2.text=\r\n\ Sets\ up\ the\ test\ fixture.\r\n\r\n\ Called\ before\ every\ test\ case\ method.\r\n
@@ -24,6 +20,4 @@ comment7.params=
 comment7.target=void\ testConstrHeightNeg()
 comment8.params=
 comment8.target=void\ testConstrLengthNeg()
-comment9.params=
-comment9.target=void\ testConstrPriceNeg()
-numComments=12
+numComments=9
