@@ -9,16 +9,22 @@
 public class StorageLocation
 {
     // instance variables
+    /**Designation name of the STorageLocation*/
     private String designation;
+    /**2d array at of the STorageLocation for storage units*/
     private StorageUnit[][] storageUnits;
+    /**array at of the STorageLocation for Customers*/
     private Customer[] customers;
+    /**number of customers present at the Storageocation*/
     private int numCustomers;
+    /**baseprice of any unit at this storagelocation*/
     private double basePrice;
 
     /**
      * Constructor for objects of class StorageLocation
      * 
      * @param   designation     the name of the store location to be instantiated
+     * @param   basePrice       the base price of the stoe location to be set
      */
     public StorageLocation(String designation, double basePrice)
     {

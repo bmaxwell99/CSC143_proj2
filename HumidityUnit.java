@@ -7,10 +7,18 @@
  */
 public class HumidityUnit extends StorageUnit
 {
+    /**Humidity of the Storage Unit*/
     private int humLvl;
 
     /**
      * Constructor for objects of class HumidityUnit
+     * 
+     * @param  width    the width to be set
+     * @param  height   the height to be set
+     * @param  length   the length to be set
+     * @param  myLoc    the Location this storage unit is at
+     * @param  humLvl   the humidity of the Unit
+     * 
      */
     public HumidityUnit(double width, double height, double length, StorageLocation myLoc, int humLvl)
     {

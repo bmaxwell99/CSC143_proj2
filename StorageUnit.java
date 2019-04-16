@@ -8,16 +8,28 @@ import java.time.LocalDate;
  */
 public abstract class StorageUnit
 {
+    /**Width of the Storage Unit*/
     private double width;
+    /**Height of the Storage Unit*/
     private double height;
+    /**Length of the Storage Unit*/
     private double length;    
     //private double price;
+    /**Customer renting this Storage Unit*/
     private Customer rentedBy;
+    /**Date rental will begin upon*/
     private LocalDate rentalDate;
+    /**Location of this Storage Unit*/
     private StorageLocation myLoc;
 
     /**
      * Constructor for objects of class StorageUnit
+     * 
+     * @param  width    the width to be set
+     * @param  height   the height to be set
+     * @param  length   the length to be set
+     * @param  myLoc    the Location this storage unit is at
+     * 
      */
     public StorageUnit(double width, double height, double length, StorageLocation myLoc)
     {
@@ -177,8 +189,8 @@ public abstract class StorageUnit
     /**
      * this method rents this unit to a given customer at a given date
      *
-     * @param  Customer     the customer to be renting the unit
-     * @param  LocalDate    the date to start renting the unit
+     * @param  cust     the customer to be renting the unit
+     * @param  startDate    the date to start renting the unit
      */
     public void rentUnitTo(Customer cust, LocalDate startDate)
     {

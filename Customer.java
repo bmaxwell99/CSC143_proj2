@@ -8,13 +8,21 @@ import java.lang.IllegalArgumentException;
  */
 public class Customer
 {
+    /**Name of the customer*/
     private String name;
+    /**Phone number of the customer*/
     private String pNumber;
+    /**Balance of the Customer*/
     private double balance;
+    /**Number of Units the customer has rented*/
     private int unitsRented;
 
     /**
      * Constructor for objects of class Customer
+     * 
+     * @param   name   the name to set this customer to
+     * @param   pNumber   the phone number to set this customer to
+     * 
      */
     public Customer(String name, String pNumber)
     {
@@ -87,6 +95,7 @@ public class Customer
      *
      *    
      * @param   amount  the amount to increase the balance
+     * @return  the updated balance
      */
     public double chargeAccount(double amount)
     {
@@ -94,13 +103,14 @@ public class Customer
             throw new IllegalArgumentException("Charge must be a positive number");
         }
         else {balance += amount;}
-        return amount;
+        return this.getBalance();
     }
 
     /**
      * this decreases the balance on this customers account
      *
      * @param   amount  the amount to decrease the balance
+     * @return  the updated balance
      */
     public double creditAccount(double amount)
     {
@@ -113,7 +123,7 @@ public class Customer
         else {
             balance -= amount;
         }
-        return amount;
+        return this.getBalance();
     }
 
     /**

@@ -7,10 +7,18 @@
  */
 public class TemperatureUnit extends StorageUnit
 {
+    /**temperature of the Storage Unit*/
     private int tempLvl;
 
     /**
      * Constructor for objects of class TemperatureUnit
+     * 
+     * @param  width    the width to be set
+     * @param  height   the height to be set
+     * @param  length   the length to be set
+     * @param  myLoc    the Location this storage unit is at
+     * @param  tempLvl  the temperature of the Unit
+     * 
      */
     public TemperatureUnit(double width, double height, double length, StorageLocation myLoc, int tempLvl)
     {
