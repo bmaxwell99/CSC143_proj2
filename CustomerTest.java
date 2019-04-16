@@ -63,7 +63,7 @@ public class CustomerTest
     @Test (expected = IllegalArgumentException.class)
     public void testConstrName()
     {
-        Customer cust1 = new Customer("123 123", "1234567890");        
+        Customer cust1 = new Customer("joeSchmoe", "1234567890");        
     }
 
     @Test (expected = IllegalArgumentException.class)

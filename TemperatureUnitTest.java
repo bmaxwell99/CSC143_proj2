@@ -16,7 +16,7 @@ public class TemperatureUnitTest
     public static final double VARIANCE = 0.0001;
     
     StorageLocation loc1 = new StorageLocation("WA01Issaquah", 25);
-    StorageUnit unit1= loc1.getUnit(10,0);
+    TemperatureUnit unit1= (TemperatureUnit) loc1.getUnit(10,0);
     
     /**
      * Default constructor for test class TemperatureUnitTest
@@ -47,7 +47,7 @@ public class TemperatureUnitTest
     
     @Test
     public void testCntrGetSet()    {
-        assertEquals(55,    unit1.getTempLvl());
+        assertEquals(55,     unit1.getTempLvl());
         assertEquals(2797,  unit1.calcPrice(),      VARIANCE);
         unit1.setTempLvl(45);
         assertEquals(2827,  unit1.calcPrice(),      VARIANCE);

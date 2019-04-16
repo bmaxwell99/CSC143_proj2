@@ -118,7 +118,7 @@ public class StorageLocation
                 return storageUnits[row][col];
             }
             else    {
-                throw new IllegalArgumentException("col must be of a valid index");
+                throw new IllegalArgumentException("col must be between 0 and" + (storageUnits[row].length - 1));
             }
         }
         else    {
@@ -139,13 +139,40 @@ public class StorageLocation
         numCustomers += 1;
         //if num_customers reaches 100, create new array of customers and add the previous one to it
         if(numCustomers == 100)    {
-            Customer[] temp = new Customer[(customers.length + 100)];
-            for(int i = 0; i < customers.length; i++)    {
-                temp[i] = customers[i];
-            }
-            customers = temp;
+            incCustArray();
         }
     }
+
+    /**
+     * Overloaded method adds a new customer to the array Customers
+     *
+     * @param   cust    Customer object to be added
+     * 
+     */
+    public void addCustomer(Customer cust)
+    {
+        customers[numCustomers] = cust;
+        numCustomers += 1;
+        //if num_customers reaches 100, create new array of customers and add the previous one to it
+        if(numCustomers % 100 == 0)    {
+            incCustArray();
+        }
+    }
+
+    /**
+     * helper method that increases the size of the Customer array when it reaches capacity
+     *
+     * 
+     */
+    private void incCustArray()
+    {
+        {
+            Customer[] temp = new Customer[(customers.length + 100)];
+            //is this what you had in mind for Block Copy?
+            System.arraycopy(customers, 0, temp, 0, customers.length);
+            customers = temp;
+        }
+    }    
 
     /**
      * Get the customer at the given index
@@ -208,32 +235,39 @@ public class StorageLocation
     {
         StorageUnit[] units = new StorageUnit[240];
         int unitsIndex = 0;
-        for (StorageUnit[] row : storageUnits) {
+        for (StorageUnit[] row : storageUnits) { 
             for (StorageUnit stor : row)   {
                 //searches for a specific customer with a specific roomtype
-                if( cust != null & type != null) {
-                    if(stor.getRentedBy().equals(cust) & stor.getClass().equals(type.getClass()))   {
-                        units[unitsIndex] = stor;
-                        unitsIndex += 1;
+                if( cust != null & type != null) 
+                {
+                    if(stor.getRentedBy() != null)
+                    {
+                        if(stor.getRentedBy().equals(cust) & stor.getClass().equals(type.getClass()))   {
+                            units[unitsIndex] = stor;
+                            unitsIndex += 1;
+                        }
                     }
                 }
                 //searches for a specific customer
                 if( cust != null & type == null)   {
-                    if(stor.getRentedBy().equals(cust)) {
-                        units[unitsIndex] = stor;
-                        unitsIndex += 1;
+                    if(stor.getRentedBy() != null)  
+                    {
+                        if(stor.getRentedBy().equals(cust)) {
+                            units[unitsIndex] = stor;
+                            unitsIndex += 1;
+                        }
                     }
                 }
                 //searches for a specific StorageUnit type
                 if( cust == null & type != null)   {
-                    if(stor.getRentedBy().equals(null) & stor.getClass().equals(type.getClass())) {
+                    if(stor.getRentedBy() == null & stor.getClass().equals(type.getClass())) {
                         units[unitsIndex] = stor;
                         unitsIndex += 1;
                     }
                 }
                 //searches for all empty units
-                else    {
-                    if(stor.getRentedBy().equals(null)) {
+                else if (cust == null & type == null)    {
+                    if(stor.getRentedBy() == null) {
                         units[unitsIndex] = stor;
                         unitsIndex += 1;
                     }
@@ -242,7 +276,7 @@ public class StorageLocation
         }
         StorageUnit[] units2 = new StorageUnit[unitsIndex];   
         for(int i= 0; i < unitsIndex; i++)  {
-                units2[i] = units[i];
+            units2[i] = units[i];
         }
         return units2;
     }

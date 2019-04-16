@@ -31,8 +31,8 @@ public class Customer
      */
     public void setName(String name)
     {
-        if (!(name.matches("(?i)[a-z]*(\\s)[a-z]*"))){
-            throw new IllegalArgumentException("Names must be made of a first and last name, letters only.");
+        if (!(name.matches("(?i)[a-z0-9]*(\\s)[a-z0-9]*"))){
+            throw new IllegalArgumentException("Names must be made of a first and last name");
         }
         this.name = name;
     }

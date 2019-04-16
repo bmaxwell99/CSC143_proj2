@@ -38,7 +38,7 @@ public class HumidityUnit extends StorageUnit
      * @param  humLvl   the humdity level to be set
      *
      */
-    private void setHumLvl(int humLvl)
+    public void setHumLvl(int humLvl)
     {
         if (humLvl >= 20 & humLvl <= 60)  {
             this.humLvl = humLvl;

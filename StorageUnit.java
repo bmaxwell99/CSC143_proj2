@@ -184,7 +184,9 @@ public abstract class StorageUnit
     {
         this.rentedBy = cust;
         this.rentalDate = startDate;
-        cust.incUnitsRented();
+        if(cust != null)    {
+            cust.incUnitsRented();
+        }
     }    
 
     /**

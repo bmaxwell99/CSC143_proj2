@@ -66,6 +66,7 @@ public class StandardUnitTest
         //test rentUnitTo and getters
         unit1.rentUnitTo(cust1, date1);
         assertEquals(cust1,     unit1.getRentedBy());
+        assertEquals(1,         unit1.getRentedBy().getUnitsRented());
         assertEquals(date1,     unit1.getRentalDate());
         
         //test release
